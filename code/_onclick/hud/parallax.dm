@@ -15,7 +15,8 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
-			
+		
+		/*
 		if(GLOB.minetype == MINETYPE_LAVALAND)
 			if(HAS_TRAIT(SSstation, STATION_TRAIT_MOONSCORCH))
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet/moonscorch(null, src)
@@ -23,6 +24,11 @@
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
 		if(GLOB.minetype == MINETYPE_JUNGLE)
 			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet/jungle(null, src)
+
+
+		The singularity consumes all
+		*/
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet/singularity(null, src)
 
 		if(SSparallax.random_layer)
 			C.parallax_layers_cached += new SSparallax.random_layer.type(null, src, FALSE, SSparallax.random_layer)
@@ -380,3 +386,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/planet/jungle 
 	icon_state = "jungleland"
+
+/atom/movable/screen/parallax_layer/planet/singularity
+	icon = 'icons/effects/288x288.dmi'
+	icon_state = "singularity_s9"
+	pixel_x = -128
+	pixel_y = -128
+
+/atom/movable/screen/parallax_layer/planet/singularity/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	transform = matrix().Scale(0.5)

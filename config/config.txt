@@ -465,4 +465,4 @@ MAX_SHUTTLE_SIZE 300
 TOAST_NOTIFICATION_ON_INIT
 
 ## Enable/Disable Backrooms z-level generation at startup
-BACKROOMS_ENABLED
+#BACKROOMS_ENABLED
