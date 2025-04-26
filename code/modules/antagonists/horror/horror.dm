@@ -427,7 +427,7 @@
 	for(var/path in subtypesof(/datum/horror_chem))
 		var/datum/horror_chem/chem = path
 		if(path in horror_chems)
-			content += "<tr><td><a class='chem-select' href='?_src_=\ref[src];src=\ref[src];horror_use_chem=[initial(chem.chemname)]'>[initial(chem.chemname)] ([initial(chem.chemuse)])</a><p>[initial(chem.chem_desc)]</p></td></tr>"
+			content += "<tr><td><a class='chem-select' href='byond://?_src_=\ref[src];src=\ref[src];horror_use_chem=[initial(chem.chemname)]'>[initial(chem.chemname)] ([initial(chem.chemuse)])</a><p>[initial(chem.chem_desc)]</p></td></tr>"
 
 	content += "</table>"
 
@@ -717,9 +717,9 @@
 		to_chat(src, span_notice("This host lacks enough brain function to control."))
 		return
 
-	if(victim.has_trauma_type(/datum/brain_trauma/severe/split_personality))
-		to_chat(src, span_notice("This host's brain lobe separation makes it too complex for you to control."))
-		return
+	// if(victim.has_trauma_type(/datum/brain_trauma/severe/split_personality))
+	// 	to_chat(src, span_notice("This host's brain lobe separation makes it too complex for you to control."))
+	// 	return
 
 	if(bonding)
 		bonding = FALSE

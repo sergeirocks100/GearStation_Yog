@@ -100,7 +100,13 @@ type Recipe = {
   reqs: Atoms;
   tool_behaviors: string[];
   tool_paths: string[];
+  skill_requirements: string[];
   foodtypes: string[];
+};
+
+type Skill = {
+  skill: string;
+  level: number;
 };
 
 type Diet = {
@@ -222,6 +228,7 @@ export const PersonalCrafting = (props, context) => {
                 <Stack.Item>
                   <Input
                     autoFocus
+                    expensive
                     placeholder={
                       'Search in ' +
                       data.recipes.length +
@@ -285,7 +292,7 @@ export const PersonalCrafting = (props, context) => {
                     </Tabs.Tab>
                   </Tabs>
                 </Stack.Item>
-                <Stack.Item grow m={-1}>
+                <Stack.Item grow m={-1} style={{ overflowY: 'auto' }}>
                   <Box height={'100%'} p={1} style={{ 'overflow-y': 'auto' }}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
@@ -707,6 +714,14 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                       ))}
                   </Box>
                 )}
+                {(item.skill_requirements) && (
+                  <Box>
+                    <GroupTitle title="Skills" />
+                    {item.skill_requirements.map((skill_req, index) => (
+                      <SkillContent key={index} skill={skill_req.skill} level={skill_req.level} />
+                    ))}
+                  </Box>
+                )}
               </Box>
             </Stack.Item>
             <Stack.Item pl={1}>
@@ -792,6 +807,23 @@ const ToolContent = ({ tool }) => {
       />
       <Box inline verticalAlign="middle">
         {tool}
+      </Box>
+    </Box>
+  ) as any;
+};
+
+const SkillContent = ({ skill, level }) => {
+  return (
+    <Box my={1}>
+      <Box
+        verticalAlign="middle"
+        inline
+        my={-1}
+        mr={0.5}
+        className={classes(['crafting32x32', skill.replace(/ /g, '')])}
+      />
+      <Box inline verticalAlign="middle">
+        {skill} {level}
       </Box>
     </Box>
   ) as any;

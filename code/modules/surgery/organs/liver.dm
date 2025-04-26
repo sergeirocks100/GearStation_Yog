@@ -118,7 +118,9 @@
 	alcohol_tolerance = 0.0005
 	maxHealth = 3 * STANDARD_ORGAN_THRESHOLD //300% health of a normal liver
 	healing_factor = 2 * STANDARD_ORGAN_HEALING //Can regenerate from damage quicker
+	toxTolerance = 20
 	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 0.7
+	cybernetic_quality = 1
 
 /obj/item/organ/liver/cybernetic/upgraded/on_life()
 	. = ..()

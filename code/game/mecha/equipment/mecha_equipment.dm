@@ -97,7 +97,7 @@
 	if(chassis.selected == src)
 		txt += "<b>[src.name]</b>"
 	else if(selectable)
-		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[src.name]</a>"
+		txt += "<a href='byond://?src=[REF(chassis)];select_equip=[REF(src)]'>[src.name]</a>"
 	else
 		txt += "[src.name]"
 
@@ -246,8 +246,8 @@
 	return 0
 
 // Is the occupant wearing a pilot suit?
-/obj/item/mecha_parts/mecha_equipment/proc/check_eva()
-	return chassis?.check_eva()
+/obj/item/mecha_parts/mecha_equipment/proc/check_eva(mob/pilot)
+	return chassis?.check_eva(pilot)
 
 // Some equipment can be used as tools
 /obj/item/mecha_parts/mecha_equipment/tool_use_check(mob/living/user, amount)

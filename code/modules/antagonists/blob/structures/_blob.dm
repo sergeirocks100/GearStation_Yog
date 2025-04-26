@@ -77,10 +77,10 @@
 /obj/structure/blob/can_atmos_pass(turf/target_turf, vertical = FALSE)
 	return !atmosblock
 
-/obj/structure/blob/CanAStarPass(ID, dir, caller)
+/obj/structure/blob/CanAStarPass(ID, dir, caller_but_not_a_byond_built_in_proc)
 	. = 0
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
+	if(ismovable(caller_but_not_a_byond_built_in_proc))
+		var/atom/movable/mover = caller_but_not_a_byond_built_in_proc
 		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon(updates=ALL) //Updates color based on overmind color if we have an overmind.
@@ -210,13 +210,13 @@
 		if(prob(40 + (severity * 6)))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power, tesla_flags, shocked_targets, zap_gib = FALSE)
-	..()
+/obj/structure/blob/tesla_act(source, power, zap_range, tesla_flags, list/shocked_targets)
+	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
-			take_damage(power/400, BURN, ENERGY)
+			take_damage(power/400, BURN, ELECTRIC)
 	else
-		take_damage(power/400, BURN, ENERGY)
+		take_damage(power/400, BURN, ELECTRIC)
 
 /obj/structure/blob/extinguish()
 	..()

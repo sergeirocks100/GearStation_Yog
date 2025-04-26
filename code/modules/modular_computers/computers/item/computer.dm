@@ -55,7 +55,7 @@
 
 	integrity_failure = 50
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0, ELECTRIC = 100)
 
 	light_system = MOVABLE_LIGHT
 	light_range = 3
@@ -399,15 +399,15 @@
   * The message that the program wishes to display.
  */
 
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller_but_not_a_byond_built_in_proc, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+	if(!caller_but_not_a_byond_built_in_proc || !caller_but_not_a_byond_built_in_proc.alert_able || caller_but_not_a_byond_built_in_proc.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return
 	play_computer_sound(sound, 50, TRUE)
 	var/mob/living/holder = loc
 	if(istype(holder))
-		to_chat(holder, span_notice("\The [src] displays a [caller.filedesc] notification: [alerttext]"))
+		to_chat(holder, span_notice("\The [src] displays a [caller_but_not_a_byond_built_in_proc.filedesc] notification: [alerttext]"))
 	else
-		visible_message(span_notice("\The [src] displays a [caller.filedesc] notification: [alerttext]"))
+		visible_message(span_notice("\The [src] displays a [caller_but_not_a_byond_built_in_proc.filedesc] notification: [alerttext]"))
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()

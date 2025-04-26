@@ -184,7 +184,8 @@
 				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				return
-			switch(SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1))
+			var/mob/user = usr
+			switch(SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1, (10 - user.get_skill(SKILL_TECHNICAL)) / 10))
 				if(0)
 					say("Shuttle departing. Please stand away from the doors.")
 					return TRUE
@@ -203,7 +204,7 @@
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, span_notice("Your request has been received by CentCom."))
-			to_chat(GLOB.permissions.admins, "<b>FERRY: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")
+			to_chat(GLOB.permissions.admins, "<b>FERRY: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A href='byond://?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

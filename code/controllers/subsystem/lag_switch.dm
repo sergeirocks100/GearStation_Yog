@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(lag_switch)
 	auto_switch = FALSE
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 	veto_timer_id = addtimer(CALLBACK(src, PROC_REF(set_all_measures), TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
-	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
+	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
 	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
 
 /// (En/Dis)able automatic triggering of switches based on client count
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(lag_switch)
 				for(var/mob/user as anything in GLOB.player_list)
 					if(user.stat == DEAD && !user.client?.holder)
 						GLOB.keyloop_list -= user
-				deadchat_broadcast(span_big("To increase performance Observer freelook is now disabled. Please use Orbit, Teleport, and Jump to look around."), message_type = DEADCHAT_ANNOUNCEMENT)
+				deadchat_broadcast(span_big("To increase performance, Observer freelook is now disabled. Please use Orbit, Teleport, and Jump to look around."), message_type = DEADCHAT_ANNOUNCEMENT)
 			else
 				GLOB.keyloop_list |= GLOB.player_list
 				deadchat_broadcast("Observer freelook has been re-enabled. Enjoy your wooshing.", message_type = DEADCHAT_ANNOUNCEMENT)
@@ -102,6 +102,24 @@ SUBSYSTEM_DEF(lag_switch)
 						continue
 					if(!ghost.client.holder && ghost.client.view_size.getView() != ghost.client.view_size.default)
 						ghost.client.view_size.resetToDefault()
+				deadchat_broadcast(span_big("To increase performance, Observer custom view range/T-ray views are now disabled."), message_type = DEADCHAT_ANNOUNCEMENT)
+			else
+				deadchat_broadcast("Observer custom view range/T-ray views are now re-enabled. Enjoy your wooshing.", message_type = DEADCHAT_ANNOUNCEMENT)
+		if(DISABLE_RUNECHAT)
+			if(state)
+				to_chat(world, span_boldannounce("Runechat has been disabled for performance concerns."))
+			else
+				to_chat(world, span_boldannounce("Runechat has been re-enabled."))
+		if(DISABLE_USR_ICON2HTML)
+			if(state)
+				to_chat(world, span_boldannounce("Icon2html has been disabled for performance concerns."))
+			else
+				to_chat(world, span_boldannounce("Icon2html has been re-enabled."))
+		if(DISABLE_NON_OBSJOBS)
+			var/datum/admins/holder = new(usr)
+			holder.toggleenter() //This does the same thing, no need for duplicate proc
+			world.update_status()
+		/* Commented out since we don't have an implementation of this and I haven't figured out an alternative yet
 		if(SLOWMODE_SAY)
 			if(state)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been enabled with [slowmode_cooldown/10] seconds between messages."))
@@ -109,8 +127,7 @@ SUBSYSTEM_DEF(lag_switch)
 				for(var/client/C as anything in GLOB.clients)
 					COOLDOWN_RESET(C, say_slowmode)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
-		if(DISABLE_NON_OBSJOBS)
-			world.update_status()
+		*/
 		if(DISABLE_PARALLAX)
 			if (state)
 				to_chat(world, span_boldannounce("Parallax has been disabled for performance concerns."))

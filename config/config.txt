@@ -168,7 +168,7 @@ VOTE_PERIOD 600
 # DEFAULT_NO_VOTE
 
 ## disable abandon mob
-NORESPAWN
+# NORESPAWN
 
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB
@@ -441,14 +441,14 @@ DRIFT_PROFILE_DELAY 150
 #MENTORS_MOBNAME_ONLY
 
 ## Uncomment below to make everyone a donator
-#EVERYONE_IS_DONATOR
+EVERYONE_IS_DONATOR
 
 ## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
 ## More API details can be found here: https://centcom.melonmesa.com
 CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
 
 ## Uncomment to disable hard deleting garbage collection failures. (Hard deleting GC failures causes lag in order to bring memory usage down and keep bugged objects from hanging around and causing bugs in other things.) You can safely enable this for performance on production if the lag spikes are too disruptive)
-#DISABLE_GC_FAILURE_HARD_DELETES
+DISABLE_GC_FAILURE_HARD_DELETES
 
 ## Uncomment to disable hard deletes entirely, even things that explicitly request. This is not recommended unless you have a need for it during events or other high pop times where performance is key.
 #DISABLE_ALL_HARD_DELETES
@@ -463,3 +463,6 @@ MAX_SHUTTLE_SIZE 300
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT
+
+## Enable/Disable Backrooms z-level generation at startup
+BACKROOMS_ENABLED

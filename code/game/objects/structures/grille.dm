@@ -8,7 +8,7 @@
 	anchored = TRUE
 	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 0, ELECTRIC = 100)
 	max_integrity = 50
 	integrity_failure = 20
 	appearance_flags = KEEP_TOGETHER
@@ -151,10 +151,10 @@
 	else if(!. && istype(mover, /obj/projectile))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(ID, dir, caller)
+/obj/structure/grille/CanAStarPass(ID, dir, caller_but_not_a_byond_built_in_proc)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
+	if(ismovable(caller_but_not_a_byond_built_in_proc))
+		var/atom/movable/mover = caller_but_not_a_byond_built_in_proc
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)

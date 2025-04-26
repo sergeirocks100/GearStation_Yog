@@ -159,7 +159,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/mentor_memo, // YOGS - something stupid about "Mentor memos"
 	/client/proc/release_queue, // Yogs -- Adds some queue-manipulation verbs
 	/client/proc/toggle_cdn,
-	/client/proc/set_next_minetype
+	/client/proc/set_next_minetype,
+	/client/proc/lag_switch_panel
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -850,7 +851,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Debug Stat Panel"
 	set category = "Misc.Server Debug"
 
-	src << output("", "statbrowser:create_debug")
+	src.stat_panel.send_message("create_debug")
 
 /// Debug verb for seeing at a glance what all spells have as set requirements
 /client/proc/debug_spell_requirements()

@@ -353,7 +353,7 @@
 			. += "[icon2html(ME, user)] \A [ME]."
 	if(occupant && occupant == user)
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid || deflect_chance || max_temperature)
-			. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.</span>"
+			. += "<span class='notice'>It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.</span>"
 	if(!enclosed)
 		if(silicon_pilot)
 			. += "[src] appears to be piloting itself..."
@@ -377,7 +377,7 @@
 				. += span_danger("The capacitor did well in preventing too much damage. Repair will be manageable.")
 			if(4)
 				. += span_danger("The capacitor did such a good job in preserving the chassis that you could almost call it functional. But it isn't. Repair should be easy though.")
-		if(repair_hint && capacitor?.rating)
+		if(repair_hint && (capacitor?.rating || user.skill_check(SKILL_TECHNICAL, EXP_GENIUS) || user.skill_check(SKILL_MECHANICAL, EXP_GENIUS)))
 			. += repair_hint
 
 //Armor tag
@@ -844,7 +844,7 @@
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
+		to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
 	else
 		examine(user)
 		if(occupant)
@@ -858,7 +858,7 @@
 		if(!can_control_mech)
 			to_chat(user, span_warning("You cannot control exosuits without AI control beacons installed."))
 			return
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
+		to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
@@ -1041,7 +1041,7 @@
 
 	visible_message("[user] starts to climb into [name].")
 
-	if(do_after(user, enter_delay, src))
+	if(do_after(user, round(enter_delay * (check_eva(user)**2)), src, IGNORE_SKILL_DELAY, skill_check = SKILL_TECHNICAL))
 		if(atom_integrity <= 0)
 			to_chat(user, span_warning("You cannot get in the [name], it has been destroyed!"))
 		else if(occupant)
@@ -1160,7 +1160,7 @@
 /obj/mecha/container_resist(mob/living/user)
 	is_currently_ejecting = TRUE
 	to_chat(occupant, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.<span>")
-	if(do_after(occupant, exit_delay, src))
+	if(do_after(occupant, round(exit_delay * (check_eva(user)**2)), src, IGNORE_SKILL_DELAY, skill_check = SKILL_TECHNICAL))
 		to_chat(occupant, "<span class='notice'>You exit the mech.<span>")
 		go_out()
 	else
@@ -1375,18 +1375,11 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(QDELETED(I))
 			return
 
-// Checks the pilot and their clothing for mech speed buffs
-/obj/mecha/proc/check_eva()
-	var/evaNum = 1
-	if(ishuman(occupant))
-		var/mob/living/carbon/human/H = occupant //if the person is skilled
-		var/datum/component/mech_pilot/skill = H.GetComponent(/datum/component/mech_pilot)
-		if(skill)
-			evaNum *= skill.piloting_speed
-
-		var/obj/item/clothing/under/clothes = H.get_item_by_slot(ITEM_SLOT_ICLOTHING) //if the jumpsuit directly assists the pilot
-		if(clothes)
-			var/datum/component/mech_pilot/MP = clothes.GetComponent(/datum/component/mech_pilot)
-			if(MP)
-				evaNum *= MP.piloting_speed
-	return evaNum
+// Check the pilot for mech piloting skill
+/obj/mecha/proc/check_eva(mob/pilot)
+	if(!pilot)
+		pilot = occupant
+	var/effective_skill = pilot.get_skill(SKILL_TECHNICAL)
+	if(HAS_TRAIT(pilot, TRAIT_SKILLED_PILOT) || HAS_MIND_TRAIT(pilot, TRAIT_SKILLED_PILOT))
+		effective_skill += EXP_LOW
+	return 1 + (2 - effective_skill) * 0.075

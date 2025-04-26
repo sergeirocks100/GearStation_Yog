@@ -170,19 +170,19 @@
 				dat += "[span_highlight("[target.get_name()]")] gene with [span_highlight("[disk.gene.get_name()]")]?<br>"
 			if("insert")
 				dat += "[span_highlight("[disk.gene.get_name()]")] gene into \the [span_highlight("[seed]")]?<br>"
-		dat += "</div><div class='line'><a href='?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
-		dat += "<a href='?src=[REF(src)];abort=1'>Abort</a></div>"
+		dat += "</div><div class='line'><a href='byond://?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
+		dat += "<a href='byond://?src=[REF(src)];abort=1'>Abort</a></div>"
 		popup.set_content(dat)
 		popup.open()
 		return
 
 	dat+= "<div class='statusDisplay'>"
 
-	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=[REF(src)];eject_seed=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='byond://?src=[REF(src)];eject_seed=1'>"
 	dat += seed ? seed.name : "None"
 	dat += "</a></div></div>"
 
-	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=[REF(src)];eject_disk=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='byond://?src=[REF(src)];eject_disk=1'>"
 	if(!disk)
 		dat += "None"
 	else if(!disk.gene)
@@ -206,9 +206,9 @@
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 			if(can_extract)
-				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+				dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
 			if(can_insert && istype(disk.gene, G.type))
-				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
+				dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
 
@@ -220,15 +220,15 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No content-related genes detected in sample.<br>"
 			dat += "</div>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/reagent))
-				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='byond://?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 
 			dat += "<div class='line'><h3>Trait Genes</h3></div><div class='statusDisplay'>"
 			if(trait_genes.len)
@@ -237,14 +237,14 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
-				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='byond://?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
 		dat += "<br>No sample found.<br>[span_highlight("Please, insert a plant sample to use this device.")]"
@@ -255,7 +255,9 @@
 /obj/machinery/plantgenes/Topic(href, list/href_list)
 	if(..())
 		return
-	usr.set_machine(src)
+
+	var/mob/user = usr
+	user.set_machine(src)
 
 	if(href_list["eject_seed"] && !operation)
 		if (seed)
@@ -338,6 +340,9 @@
 								gene.value = max(gene.value, min_wrate)
 							else if(istype(G, /datum/plant_gene/core/weed_chance))
 								gene.value = max(gene.value, min_wchance)
+						if(G.extract_value && user.add_exp(SKILL_SCIENCE, G.extract_value, G.type))
+							user.playsound_local(get_turf(src), 'sound/machines/ping.ogg', 25, TRUE)
+							balloon_alert(user, "new trait catalogued: [lowertext(G.name)]")
 						disk.update_appearance()
 						qdel(seed)
 						seed = null
