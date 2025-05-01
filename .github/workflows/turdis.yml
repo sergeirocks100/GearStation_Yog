@@ -151,7 +151,7 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386 gcc-multilib g++-8 g++-8-multilib zlib1g:i386 libssl3 libssl3:i386
+          sudo apt install libstdc++6:i386 gcc-multilib g++-9 g++-9-multilib zlib1g:i386 libssl3 libssl3:i386
 
       - name: Restore Cache BYOND
         uses: actions/cache@v4
