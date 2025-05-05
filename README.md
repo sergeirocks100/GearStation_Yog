@@ -1,6 +1,6 @@
-## Yogstation13 is shutting down
+## Yogstation13 has shut down
 > [!WARNING]
-Yogstation13 will be permanently shutting down on the 30th of April 2025. See https://forums.yogstation.net/shutdown/ for more information.
+Yogstation13 as of 5th of May 2025, is no longer being ran or developed.
 
 
 ## Yogstation codebase
