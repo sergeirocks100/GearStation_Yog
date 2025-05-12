@@ -516,8 +516,6 @@
 /// Reaction that burns nitrium and plouxium into radballs and partial constituent gases, but also catalyzes the combustion of plasma.
 /datum/gas_reaction/nitro_ball/react(datum/gas_mixture/air, datum/holder)
 	var/turf/open/location = get_holder_turf(holder)
-	if(!location)
-		return NO_REACTION
 
 	var/old_thermal_energy = air.thermal_energy()
 
