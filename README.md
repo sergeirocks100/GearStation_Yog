@@ -1,4 +1,4 @@
-## Yogstation codebase
+## GearStation codebase
 
 [![Build Status](https://github.com/yogstation13/Yogstation/workflows/Turdis/badge.svg?branch=master)](https://github.com/yogstation13/Yogstation/actions?query=workflow%3ATurdis+branch%3Amaster)
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
@@ -14,15 +14,15 @@
 ![b-a-d-g-e](https://forthebadge.com/images/badges/uses-git.svg)
 ![B.A.D.G.E.](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)
 
-[**Website**](https://yogstation.net)
+[**Website**](https://gearstation.space)
 
-[**Code**](https://github.com/yogstation13/yogstation)
+[**Code**](https://github.com/sergeirocks100/GearStation_Yog)
 
-[**Wiki**](https://wiki.yogstation.net)
+[**Wiki**](https://gearstation.space/wiki)
 
-[**Discord**](https://discord.gg/0keg6hQH05Ha8OfO)
+[**Discord**](https://discord.gg/DCddpQ5MzM)
 
-[**Yogstation GitHub Guidelines**](https://github.com/yogstation13/Yogstation/blob/master/.github/CONTRIBUTING.md#yogstation-github-guidelines)
+[**Yogstation GitHub Guidelines**](https://github.com/sergeirocks100/GearStation_Yog/blob/master/.github/CONTRIBUTING.md#yogstation-github-guidelines)
 
 
  
@@ -38,11 +38,11 @@
 
 Recently we have changed the way to compile the codebase.
 
-Find `BUILD.bat` here in the root folder of yogstation, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile.
+Find `BUILD.bat` here in the root folder of GearStation, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile.
 
-After it finishes, you can then setup the server normally by opening `yogstation.dmb` in DreamDaemon. See further down for instructions
+After it finishes, you can then setup the server normally by opening `gearstation.dmb` in DreamDaemon. See further down for instructions
 
-**Building yogstation in DreamMaker directly is now deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
+**Building GearStation in DreamMaker directly is now deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
 
 ## CONTRIBUTING
 
