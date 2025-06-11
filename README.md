@@ -22,7 +22,7 @@
 
 [**Discord**](https://discord.gg/DCddpQ5MzM)
 
-[**Yogstation GitHub Guidelines**](https://github.com/sergeirocks100/GearStation_Yog/blob/master/.github/CONTRIBUTING.md#yogstation-github-guidelines)
+[**GearStation GitHub Guidelines**](https://github.com/sergeirocks100/GearStation_Yog/blob/master/.github/CONTRIBUTING.md#yogstation-github-guidelines)
 
 
  
