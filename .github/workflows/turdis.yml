@@ -39,8 +39,8 @@ jobs:
 
       - name: Misc Checks
         run: |
-          python tools/travis/check_dme_alphabetical.py yogstation.dme
-          tools/travis/check_filedirs.sh yogstation.dme
+          python tools/travis/check_dme_alphabetical.py gearstation.dme
+          tools/travis/check_filedirs.sh gearstation.dme
           tools/travis/check_changelogs.sh
           find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
           tools/build/build --ci lint tgui-test
@@ -78,7 +78,7 @@ jobs:
           extract: true
       - name: Run OpenDream
         run: |
-          ./DMCompiler_linux-x64/DMCompiler yogstation.dme --suppress-unimplemented --define=CIBUILDING
+          ./DMCompiler_linux-x64/DMCompiler gearstation.dme --suppress-unimplemented --define=CIBUILDING
 
   compile:
     name: Compile All Maps
@@ -188,7 +188,7 @@ jobs:
       - name: Compile
         run: |
           tools/build/build --ci dm -DCIBUILDING
-          tools/travis/dm.sh -DCIBUILDING -DANSICOLORS yogstation.dme || travis_terminate 1
+          tools/travis/dm.sh -DCIBUILDING -DANSICOLORS gearstation.dme || travis_terminate 1
 
       - name: Prepare Artifacts
         run: |

@@ -16,12 +16,12 @@
 		},
 		{
 			"type": "dreammaker",
-			"dme": "yogstation.dme",
+			"dme": "gearstation.dme",
 			"problemMatcher": [
 				"$dreammaker"
 			],
 			"group": "build",
-			"label": "dm: build - yogstation.dme"
+			"label": "dm: build - gearstation.dme"
 		},
 		{
 			"type": "shell",

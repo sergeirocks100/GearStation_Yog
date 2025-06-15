@@ -1,4 +1,4 @@
-environment = "yogstation.dme"
+environment = "gearstation.dme"
 
 [langserver]
 dreamchecker = true

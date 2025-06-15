@@ -32,7 +32,7 @@ def stage2(map):
         txt = "-M{}".format(map)
     else:
         txt = ''
-    args = "bash tools/travis/dm.sh {} yogstation.dme".format(txt)
+    args = "bash tools/travis/dm.sh {} gearstation.dme".format(txt)
     print(args)
     p = subprocess.Popen(args, shell=True)
     wait(p)
