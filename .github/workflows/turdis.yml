@@ -149,7 +149,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo apt install debootstrap
+          sudo apt --yes --force-yes install debootstrap
+          Y
           mkdir ~/focal_chroot
           sudo debootstrap --no-check-gpg focal ~/focal_chroot 
           cat <<EOF | sudo tee ~/focal_chroot/etc/apt/sources.list
@@ -159,7 +160,7 @@ jobs:
           APT::Default-Release "focal";
           EOF
           sudo chroot ~/focal_chroot/ dpkg --add-architecture i386
-          sudo chroot ~/focal_chroot/ apt-get update
+          sudo chroot ~/focal_chroot/ apt-get --yes --force-yes update
           sudo chroot ~/focal_chroot/ apt install libstdc++6:i386 gcc-multilib g++-7 g++-7-multilib zlib1g:i386 libssl1.1 libssl1.1:i386
 
       - name: Restore Cache BYOND
