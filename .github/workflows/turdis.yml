@@ -149,9 +149,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt install libstdc++6:i386 gcc-multilib g++-10 g++-10-multilib zlib1g:i386 libssl-dev libssl-dev:i386
+          sudo apt-get install debootstrap
+          mkdir ~/focal_chroot
+          sudo debootstrap --no-check-gpg focal ~/focal_chroot 
+          cat <<EOF | sudo tee ~/focal_chroot/etc/apt/sources.list
+          deb http://archive.ubuntu.com/ubuntu focal main universe multiverse restricted
+          EOF
+          cat <<EOF | sudo tee ~/focal_chroot/etc/apt/apt.conf.d/01ubuntu
+          APT::Default-Release "focal";
+          EOF
+          sudo chroot ~/focal_chroot/ dpkg --add-architecture i386
+          sudo chroot ~/focal_chroot/ apt-get update
+          sudo chroot ~/focal_chroot/ apt install libstdc++6:i386 gcc-multilib g++-7 g++-7-multilib zlib1g:i386 libssl1.1 libssl1.1:i386
 
       - name: Restore Cache BYOND
         uses: actions/cache@v4
