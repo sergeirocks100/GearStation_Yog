@@ -24,7 +24,7 @@ Juke.setup({ file: import.meta.url }).then((code) => {
   process.exit(code);
 });
 
-const DME_NAME = 'geartation';
+const DME_NAME = 'gearstation';
 
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
