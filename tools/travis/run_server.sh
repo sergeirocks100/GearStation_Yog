@@ -15,7 +15,7 @@ cp _maps/$MAP.json travis_test/data/next_map.json
 
 cd travis_test
 ln -s $HOME/libmariadb/libmariadb.so libmariadb.so
-DreamDaemon yogstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis" || EXIT_CODE=$?
+DreamDaemon gearstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis" || EXIT_CODE=$?
 
 #We don't care if extools dies
 if [ $EXIT_CODE != 134 ]; then
