@@ -14,7 +14,7 @@
 </header>
 <main>
 <h1>THIS IS ALL DEPRECATED AND NO LONGER NECESSARY. YOU CAN STILL DO THIS IF YOU WANT, BUT IT IS NO LONGER A REQUIREMENT, SINCE THE MIRRORBOT IS NO LONGER ACTIVE <aside>yogstation/README.md</aside> 
-            <a href="https://github.com/sergeirocks100/GearStation_Yog/blob/edb39a8afbb7a3941a4429048944e8867e951d16/yogstation/README.md">
+            <a href="https://github.com/sergeirocks100/GearStation_Yog/blob/e80f61c300227e9e1def8de1ed10f763270aa2c3/yogstation/README.md">
         <img src="git.png" width="16" height="16" title="yogstation&#x2F;README.md"/></a></h1>
 
 <table class="summary" cellspacing="0">
@@ -42,13 +42,13 @@ bunch of shitcode here
 // yogs end
 </code></pre>
 <p>Once you mirror a file, please follow the above for marking your changes, this way we know what needs to be updated when a file has been mirrored.</p>
-<hh3 id="tgstation-dme-versus-yogstation-dme">tgstation.dme versus yogstation.dme</hh3>
-<p><strong>Do not alter the tgstation.dme file.</strong> All additions and removals should be to the yogstation.dme file. Do not manually add files to the dme! Check the file's box in the Dream Maker program. The Dream Maker does not always use alphabetical order, and manually adding a file can cause it to reorder. This means that down the line, many PRs will contain this reorder when it could have been avoided in the first place.</p>
+<hh3 id="tgstation-dme-versus-gearstation-dme">tgstation.dme versus gearstation.dme</hh3>
+<p><strong>Do not alter the tgstation.dme file.</strong> All additions and removals should be to the gearstation.dme file. Do not manually add files to the dme! Check the file's box in the Dream Maker program. The Dream Maker does not always use alphabetical order, and manually adding a file can cause it to reorder. This means that down the line, many PRs will contain this reorder when it could have been avoided in the first place.</p>
 <hh3 id="icons-code-and-sounds">Icons, code, and sounds</hh3>
 <p>Icons are notorious for conflicts. Because of this, <strong>ALL NEW ICONS</strong> must go in the &quot;yogstation/icons&quot; folder. There are to be no exceptions to this rule. Sounds don't cause conflicts, but for the sake of organization they are to go in the &quot;yogstation/sounds&quot; folder. No exceptions, either. Unless absolutely necessary, code should go in the &quot;yogstation/code&quot; folder. Small changes outside of the folder should be done with hook-procs. Larger changes should simply mirror the file in the &quot;yogstation/code&quot; folder.</p>
 <hh3 id="defines">Defines</hh3>
 <p>Defines only work if they come before the code in which they are used. Because of this, please put all defines in the <code>code/__DEFINES/~yogs_defines</code> path. Use an existing file, or create a new one if necessary.</p>
-<p>If a small addition needs to be made outside of the &quot;yogstation&quot; folder, then it should be done by adding a proc. This proc will be defined inside of the &quot;yogstation&quot; folder. By doing this, a large number of things can be done by adding just one line of code outside of the folder! If a file must be changed a lot, re-create it with the changes inside of the &quot;yogstation/code&quot; folder. <strong>Make sure to follow the file's path correctly</strong> (i.e. &quot;code/modules/clothing/clothing.dm&quot;). Then, remove the original file from the yogstation.dme and add the new one.</p>
+<p>If a small addition needs to be made outside of the &quot;yogstation&quot; folder, then it should be done by adding a proc. This proc will be defined inside of the &quot;yogstation&quot; folder. By doing this, a large number of things can be done by adding just one line of code outside of the folder! If a file must be changed a lot, re-create it with the changes inside of the &quot;yogstation/code&quot; folder. <strong>Make sure to follow the file's path correctly</strong> (i.e. &quot;code/modules/clothing/clothing.dm&quot;). Then, remove the original file from the gearstation.dme and add the new one.</p>
 <hh2 id="can-you-give-some-examples">Can you give some examples?</hh2><hh3 id="clothing">Clothing</hh3>
 <p>New clothing items should be a subtype of <code>/obj/item/clothing/CLOTHINGTYPE/yogs</code> inside of the respective clothing file. For example, replace CLOTHINGTYPE with ears to get <code>/obj/item/clothing/ears/yogs</code> inside of &quot;ears.dm&quot; in &quot;code/modules/clothing.&quot; If the file does not exist, create it and follow this format.</p>
 <hh3 id="actions-and-spells">Actions and spells</hh3>
@@ -58,8 +58,8 @@ bunch of shitcode here
 <hr />
 <hh3 id="thank-you-for-following-these-rules-please-contact-a-maintainer-or-headcoder-if-you-have-any-questions-about-modular-code-or-the-yogstation-folder">Thank you for following these rules! Please contact a maintainer or headcoder if you have any questions about modular code or the &quot;yogstation&quot; folder.</hh3></td></tr></table></main>
 <footer>
-    yogstation.dme
-    <a href="https://github.com/sergeirocks100/GearStation_Yog/tree/edb39a8afbb7a3941a4429048944e8867e951d16">edb39a8</a>
+    gearstation.dme
+    <a href="https://github.com/sergeirocks100/GearStation_Yog/tree/e80f61c300227e9e1def8de1ed10f763270aa2c3">e80f61c</a>
         (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
 </body>
 </html>
