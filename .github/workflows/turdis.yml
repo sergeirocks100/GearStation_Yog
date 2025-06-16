@@ -149,7 +149,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo apt-get install debootstrap
+          sudo apt install debootstrap
           mkdir ~/focal_chroot
           sudo debootstrap --no-check-gpg focal ~/focal_chroot 
           cat <<EOF | sudo tee ~/focal_chroot/etc/apt/sources.list
