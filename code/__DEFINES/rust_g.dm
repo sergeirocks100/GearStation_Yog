@@ -96,6 +96,30 @@
 #define rustg_acreplace_with_replacements(key, text, replacements) RUSTG_CALL(RUST_G, "acreplace_with_replacements")(key, text, json_encode(replacements))
 
 /**
+ * This proc generates rooms in a specified area of random size and placement. Essential for procedurally generated areas, BSP works by cutting a given area in half,
+ * then cutting one of those subsections in half, and repeating this process until a minimum size is reached, then backtracking to other subsections that are not of
+ * the minimum size yet. These cuts are offset by small random amounts so that the sections are all varied in size and shape.
+ *
+ * BSP excels at creating rooms or areas with a relatively even distribution over an area, so there won't be too much blank open area. However if you discard rooms that
+ * overlap pre-existing map structures or areas, you may still get blank areas where nothing interesting appears.
+ *
+ * Return:
+ * * a json list of room data to be processed by json_decode in byond and further processed there.
+ *
+ * Arguments:
+ * * width: the width of the area to generate in
+ * * height: the height of the area to generate in
+ * * hash: the rng seed the generator will use for this instance
+ * * map_subsection_min_size: The minimum size of a map subsection. When using this for rooms with walls, the minimum possible square will be a 5x5 room. Barring walls,
+ * this will be a 3x3 room. The maximum size will be 9x9, because a further cut could reduce this size beneath the minimum size.
+ * * map_subsection_min_room_width: The minimum room width once the subsections are finalized. Room width and height are random between this amount, and the subsection
+ * max size
+ * * map_subsection_min_room_height: The minimum room height once the subsections are finalized. Room width and height are random between this amount, and the subsection
+ * max size
+ */
+#define rustg_bsp_generate(width, height, hash, map_subsection_min_size, map_subsection_min_room_width, map_subsection_min_room_height) \
+	RUSTG_CALL(RUST_G, "bsp_generate")(width, height, hash, map_subsection_min_size, map_subsection_min_room_width, map_subsection_min_room_height)
+/**
  * This proc generates a cellular automata noise grid which can be used in procedural generation methods.
  *
  * Returns a single string that goes row by row, with values of 1 representing an alive cell, and a value of 0 representing a dead cell.
@@ -274,6 +298,8 @@
 #define RUSTG_ICONFORGE_CROP "Crop"
 #define RUSTG_ICONFORGE_SCALE "Scale"
 
+#define rustg_influxdb2_publish(data, endpoint, token) RUSTG_CALL(RUST_G, "influxdb2_publish")(data, endpoint, token)
+#define rustg_influxdb2_publish_profile(data, endpoint, token, round_id) RUSTG_CALL(RUST_G, "influxdb2_publish_profile")(data, endpoint, token, round_id)
 #define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
 #define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
 #define RUSTG_JOB_ERROR "JOB PANICKED"
@@ -299,6 +325,110 @@
  */
 #define rustg_noise_poisson_map(seed, width, length, radius) RUSTG_CALL(RUST_G, "noise_poisson_map")(seed, width, length, radius)
 
+/**
+ * Register a list of nodes into a rust library. This list of nodes must have been serialized in a json.
+ * Node {// Index of this node in the list of nodes
+ *  	  unique_id: usize,
+ *  	  // Position of the node in byond
+ *  	  x: usize,
+ *  	  y: usize,
+ *  	  z: usize,
+ *  	  // Indexes of nodes connected to this one
+ *  	  connected_nodes_id: Vec<usize>}
+ * It is important that the node with the unique_id 0 is the first in the json, unique_id 1 right after that, etc.
+ * It is also important that all unique ids follow. {0, 1, 2, 4} is not a correct list and the registering will fail
+ * Nodes should not link across z levels.
+ * A node cannot link twice to the same node and shouldn't link itself either
+ */
+#define rustg_register_nodes_astar(json) RUSTG_CALL(RUST_G, "register_nodes_astar")(json)
+
+/**
+ * Add a new node to the static list of nodes. Same rule as registering_nodes applies.
+ * This node unique_id must be equal to the current length of the static list of nodes
+ */
+#define rustg_add_node_astar(json) RUSTG_CALL(RUST_G, "add_node_astar")(json)
+
+/**
+ * Remove every link to the node with unique_id. Replace that node by null
+ */
+#define rustg_remove_node_astar(unique_id) RUSTG_CALL(RUST_G, "remove_node_astar")("[unique_id]")
+
+/**
+ * Compute the shortest path between start_node and goal_node using A*. Heuristic used is simple geometric distance
+ */
+#define rustg_generate_path_astar(start_node_id, goal_node_id) RUSTG_CALL(RUST_G, "generate_path_astar")("[start_node_id]", "[goal_node_id]")
+
+/**
+ * This proc generates rooms in a specified area of random size and placement. Used in procedural generation, but far less intensively than Binary Space Partitioning
+ * due to Random Room Placement being far more simple and unreliable for area coverage. These rooms will not overlap one another, but that is the only logic
+ * they do. The room dimensions returned by this call are hardcoded to be the dimensions of maint ruins so that I could sprinkle pre-generated areas over
+ * the binary space rooms that are random.
+ * These dimensions are:
+ * * 3x3
+ * * 3x5
+ * * 5x3
+ * * 5x4
+ * * 10x5
+ * * 10x10
+ *
+ * Return:
+ * * a json list of room data to be processed by json_decode in byond and further processed there.
+ *
+ * Arguments:
+ * * width: the width of the area to generate in
+ * * height: the height of the area to generate in
+ * * desired_room_count: the number of rooms you want generated and returned
+ * * hash: the rng seed the generator will use for this instance
+ */
+#define rustg_random_room_generate(width, height, desired_room_count, hash) \
+	RUSTG_CALL(RUST_G, "random_room_generate")(width, height, desired_room_count, hash)
+#define RUSTG_REDIS_ERROR_CHANNEL "RUSTG_REDIS_ERROR_CHANNEL"
+
+#define rustg_redis_connect(addr) RUSTG_CALL(RUST_G, "redis_connect")(addr)
+/proc/rustg_redis_disconnect() return RUSTG_CALL(RUST_G, "redis_disconnect")()
+#define rustg_redis_subscribe(channel) RUSTG_CALL(RUST_G, "redis_subscribe")(channel)
+/proc/rustg_redis_get_messages() return RUSTG_CALL(RUST_G, "redis_get_messages")()
+#define rustg_redis_publish(channel, message) RUSTG_CALL(RUST_G, "redis_publish")(channel, message)
+
+/**
+ * Connects to a given redis server.
+ *
+ * Arguments:
+ * * addr - The address of the server, for example "redis://127.0.0.1/"
+ */
+#define rustg_redis_connect_rq(addr) RUSTG_CALL(RUST_G, "redis_connect_rq")(addr)
+/**
+ * Disconnects from a previously connected redis server
+ */
+/proc/rustg_redis_disconnect_rq() return RUSTG_CALL(RUST_G, "redis_disconnect_rq")()
+/**
+ * https://redis.io/commands/lpush/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * elements (list) - The elements to push, use a list even if there's only one element.
+ */
+#define rustg_redis_lpush(key, elements) RUSTG_CALL(RUST_G, "redis_lpush")(key, json_encode(elements))
+/**
+ * https://redis.io/commands/lrange/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * start (string) - The zero-based index to start retrieving at
+ * * stop (string) - The zero-based index to stop retrieving at (inclusive)
+ */
+#define rustg_redis_lrange(key, start, stop) RUSTG_CALL(RUST_G, "redis_lrange")(key, start, stop)
+/**
+ * https://redis.io/commands/lpop/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * count (string|null) - The amount to pop off the list, pass null to omit (thus just 1)
+ *
+ * Note: `count` was added in Redis version 6.2.0
+ */
+#define rustg_redis_lpop(key, count) RUSTG_CALL(RUST_G, "redis_lpop")(key, count)
+
 /*
  * Takes in a string and json_encode()"d lists to produce a sanitized string.
  * This function operates on whitelists, there is currently no way to blacklist.
@@ -323,6 +453,9 @@
 /// Returns the timestamp as a string
 /proc/rustg_unix_timestamp()
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
+/// Returns the timestamp as an integer
+/proc/rustg_unix_timestamp_int()
+	return RUSTG_CALL(RUST_G, "unix_timestamp_int")()
 
 #define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
 
@@ -342,6 +475,9 @@
 	else
 		CRASH(output["content"])
 
+#define rustg_unzip_download_async(url, unzip_directory) RUSTG_CALL(RUST_G, "unzip_download_async")(url, unzip_directory)
+#define rustg_unzip_check(job_id) RUSTG_CALL(RUST_G, "unzip_check")("[job_id]")
+
 #define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
 
@@ -349,4 +485,21 @@
 	#define url_encode(text) rustg_url_encode(text)
 	#define url_decode(text) rustg_url_decode(text)
 #endif
+
+/**
+ * This proc generates a noise grid using worley noise algorithm
+ *
+ * Returns a single string that goes row by row, with values of 1 representing an alive cell, and a value of 0 representing a dead cell.
+ *
+ * Arguments:
+ * * region_size: The size of regions
+ * * threshold: the value that determines wether a cell is dead or alive
+ * * node_per_region_chance: chance of a node existiing in a region
+ * * size: size of the returned grid
+ * * node_min: minimum amount of nodes in a region (after the node_per_region_chance is applied)
+ * * node_max: maximum amount of nodes in a region
+ */
+#define rustg_worley_generate(region_size, threshold, node_per_region_chance, size, node_min, node_max) \
+	RUSTG_CALL(RUST_G, "worley_generate")(region_size, threshold, node_per_region_chance, size, node_min, node_max)
+
 
