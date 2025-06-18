@@ -9,11 +9,10 @@ then
   echo "Using cached directory."
 else
   echo "Installing Auxmos"
-  curl "https://github.com/Putnam3145/auxmos/releases/download/${AUXMOS_VERSION}/libauxmos.so"
   mkdir -p ~/.byond/bin
-  cp libauxmos.so ~/.byond/bin/libauxmos.so
-  echo "$AUXMOS_VERSION" > "$HOME/.byond/bin/auxmos-version.txt"
-  ldd ~/.byond/bin/libauxmos.so
+  wget -O ~/.byond/bin/libauxmos.so "https://github.com/Putnam3145/auxmos/releases/download/$AUXMOS_VERSION/libauxmos.so"
+  chmod +x ~/.byond/bin/libauxmos.so
+  ldd ~/.byond/bin/librust_g.so
   echo "Finished installing Auxmos"
   cd ..
 fi
