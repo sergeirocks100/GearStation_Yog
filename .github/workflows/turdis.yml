@@ -134,13 +134,6 @@ jobs:
       fail-fast: false
       matrix:
         map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
-    services:
-      mariadb:
-        image: mariadb
-        ports:
-          - 3306:3306
-        env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
     concurrency:
       group: ci-${{ github.ref }}-${{ matrix.map }}
       cancel-in-progress: true
@@ -160,12 +153,6 @@ jobs:
           key: ${{ runner.os }}-byond-${{ hashFiles('Dockerfile')}}
           restore-keys: ${{ runner.os }}-byond
 
-      - name: Restore Cache Auxmos
-        uses: actions/cache@v4
-        with:
-          path: ~/.byond
-          key: auxmos-${{ hashFiles('dependencies.sh')}}
-
       - name: Restore Yarn Cache
         uses: actions/cache@v4
         with:
@@ -183,8 +170,6 @@ jobs:
           tools/travis/install_rust_g.sh
           sudo chmod 777 tools/travis/install_extools.sh
           tools/travis/install_extools.sh
-          mysql -u root -h 127.0.0.1 -e 'CREATE DATABASE tg_travis;'
-          mysql -u root -h 127.0.0.1 tg_travis < SQL/tgstation_schema.sql
       - name: Compile
         run: |
           tools/build/build --ci dm -DCIBUILDING
