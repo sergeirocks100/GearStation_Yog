@@ -160,12 +160,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('Dockerfile')}}
           restore-keys: ${{ runner.os }}-yarn
 
-      - name: Setup database
-        run: |
-          sudo systemctl start mariadb
-          mariadb -u root -proot -e 'CREATE DATABASE tg_travis;'
-          mariadb -u root -proot tg_travis < SQL/tgstation_schema.sql
-
       - name: Setup Environment
         run: |
           tools/travis/install_byond.sh
