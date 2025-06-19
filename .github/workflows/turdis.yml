@@ -162,7 +162,7 @@ jobs:
 
       - name: Setup database
         run: |
-          sudo systemctl start mysql
+          sudo systemctl start mariadb
           mysql -u root -proot -e 'CREATE DATABASE tg_travis;'
           mysql -u root -proot tg_travis < SQL/tgstation_schema.sql
 
