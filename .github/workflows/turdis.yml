@@ -144,7 +144,7 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++-11-dev-i386-cross gcc-multilib g++-11 g++-11-multilib zlib1g:i386
+          sudo apt install libstdc++-11-dev-i386-cross gcc-multilib g++-11 g++-11-multilib zlib1g:i386 mariadb-server
 
       - name: Restore Cache BYOND
         uses: actions/cache@v4
