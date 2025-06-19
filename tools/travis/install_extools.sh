@@ -12,7 +12,7 @@ else
   mkdir -p ~/.byond/bin
   wget -O ~/.byond/bin/libauxmos.so "https://github.com/Putnam3145/auxmos/releases/download/$AUXMOS_VERSION/libauxmos.so"
   chmod +x ~/.byond/bin/libauxmos.so
-  ldd ~/.byond/bin/librust_g.so
+  ldd ~/.byond/bin/libauxmos.so
   echo "Finished installing Auxmos"
   cd ..
 fi
