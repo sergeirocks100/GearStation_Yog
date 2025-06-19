@@ -159,6 +159,13 @@ jobs:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('Dockerfile')}}
           restore-keys: ${{ runner.os }}-yarn
+
+      - name: Setup database
+        run: |
+          sudo systemctl start mysql
+          mysql -u root -proot -e 'CREATE DATABASE tg_travis;'
+          mysql -u root -proot tg_travis < SQL/tgstation_schema.sql
+
       - name: Setup Environment
         run: |
           tools/travis/install_byond.sh
