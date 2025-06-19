@@ -163,8 +163,8 @@ jobs:
       - name: Setup database
         run: |
           sudo systemctl start mariadb
-          sudo mariadb -u root -proot -e 'CREATE DATABASE tg_travis;'
-          sudo mariadb -u root -proot tg_travis < SQL/tgstation_schema.sql
+          mariadb -u root -proot -e 'CREATE DATABASE tg_travis;'
+          mariadb -u root -proot tg_travis < SQL/tgstation_schema.sql
 
       - name: Setup Environment
         run: |
