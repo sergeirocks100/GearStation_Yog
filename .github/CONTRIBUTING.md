@@ -150,7 +150,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 ## Porting features/sprites/sounds/tools from other codebases
 
-If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use, though; ports from codebases licensed under the AGPLv3, as well as the GPLv3, are permitted
+If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use, though; ports from codebases licensed under the AGPLv3, as well as the GPLv3, are permitted. 
 Regarding sprites & sounds, you must credit the artist and possibly the codebase. All GearStation assets including icons and sound are under a [Creative Commons BY-SA 3.0 license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
 
 Because GearStation is a codebase that believes in software freedom. assets or code that are under non-free licenses (such as the [Creative Commons BY-NC-SA 3.0 license](https://creativecommons.org/licenses/by-nc-sa/3.0/) that GoonStation and BurgerStation use) are banned from use on GearStation. If there are assets in something that you want to port that make use of non-free licenses, you may either:
